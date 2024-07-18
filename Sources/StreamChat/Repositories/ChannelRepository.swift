@@ -20,15 +20,23 @@ class ChannelRepository {
         userId: UserId,
         completion: ((Error?) -> Void)? = nil
     ) {
+        debugChatPrint("STEP 2.5 markRead", "channel id: \(cid)")
         apiClient.request(endpoint: .markRead(cid: cid)) { [weak self] result in
             if let error = result.error {
+                debugChatPrint("STEP 2.6 markRead apiClient.request ERROR: \(error)", "channel id: \(cid)")
                 completion?(error)
                 return
             }
+            debugChatPrint("STEP 2.6 markRead apiClient.request SUCCESS", "channel id: \(cid)")
 
             self?.database.write({ session in
                 session.markChannelAsRead(cid: cid, userId: userId, at: .init())
             }, completion: { error in
+                if let error {
+                    debugChatPrint("STEP 2.7 markRead database ERROR: \(error)", "channel id: \(cid)")
+                } else {
+                    debugChatPrint("STEP 2.7 markRead database SUCCESS", "channel id: \(cid)")
+                }
                 completion?(error)
             })
         }

@@ -26,7 +26,10 @@ import Foundation
             eventNotificationCenter: eventNotificationCenter
         )
         channels = observer.start(
-            with: .init(channelsDidChange: { [weak self] in self?.channels = $0 })
+            with: .init(channelsDidChange: { [weak self] in 
+                self?.channels = $0
+                debugChatPrint("STEP 3 ChannelListState received update", $0.map { "channel id: \($0.cid) name: \($0.name ?? "") isUnread: \($0.isUnread)" })
+            })
         )
     }
     
@@ -35,4 +38,8 @@ import Foundation
     
     /// An array of channels for the specified ``ChannelListQuery``.
     @Published public internal(set) var channels = StreamCollection<ChatChannel>([])
+}
+
+func debugChatPrint(_ items: Any...) {
+    print("bynd stream chat:", items)
 }

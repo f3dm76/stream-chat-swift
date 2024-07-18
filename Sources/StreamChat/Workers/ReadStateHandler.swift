@@ -36,6 +36,7 @@ final class ReadStateHandler {
             return
         }
         markingRead = true
+        debugChatPrint("STEP 2.4 markRead", "channel id: \(channel.cid)")
         channelUpdater.markRead(cid: channel.cid, userId: currentUserId) { error in
             self.markingRead = false
             self.isMarkedAsUnread = false

@@ -923,6 +923,7 @@ public class ChatChannelController: DataController, DelegateCallable, DataStoreP
             return
         }
 
+        debugChatPrint("STEP 2.3 markRead", "channel id: \(channel.cid)")
         readStateHandler.markRead(channel) { error in
             self.callback {
                 completion?(error)
