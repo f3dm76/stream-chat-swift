@@ -46,7 +46,7 @@ func debugChatPrint(_ items: Any...) {
         partialResult + "\(next)"
     }
 #if swift(>=5.6)
-    if #available(iOSApplicationExtension 14.0, *) {
+    if #available(iOS 14.0, *) {
         os_log("bynd stream chat: \(log)")
     } else {
         // Fallback on earlier versions
