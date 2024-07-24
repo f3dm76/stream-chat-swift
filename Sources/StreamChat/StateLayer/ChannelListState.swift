@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import OSLog
 
 /// Represents a list of channels matching to the specified query.
 @MainActor public final class ChannelListState: ObservableObject {
@@ -41,5 +42,12 @@ import Foundation
 }
 
 func debugChatPrint(_ items: Any...) {
-    print("bynd stream chat:", items)
+    let log = items.reduce("") { partialResult, next in
+        partialResult + "\(next)"
+    }
+    if #available(iOSApplicationExtension 14.0, *) {
+        os_log("bynd stream chat: \(log)")
+    } else {
+        // Fallback on earlier versions
+    }
 }
